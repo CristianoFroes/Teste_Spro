@@ -1,0 +1,26 @@
+[
+    {
+        '$lookup': {
+            'from': 'Montadoras', 
+            'localField': 'Montadora', 
+            'foreignField': 'Montadora', 
+            'as': 'montadoras'
+        }
+    }, {
+        '$unwind': {
+            'path': '$montadoras', 
+            'includeArrayIndex': 'string', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$group': {
+            '_id': '$montadoras.País', 
+            'Carros': {
+                '$push': {
+                    'Carro': '$Carro', 
+                    'País': '$País'
+                }
+            }
+        }
+    }
+]
